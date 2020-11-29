@@ -1,0 +1,35 @@
+<!-- ejs format, link to the header file -->
+<%- include("header") -%>
+
+    <div class="box" id="heading">
+        <!-- ejs formart, as a placeholding var -->
+        <h1><%= listTitle %></h1>
+    </div>
+
+    <div class="box">
+        <!-- below the newListItem is an array, it doesn't work, 
+            as all the new items will be in a single line
+            we need to loop through the array and display every item -->
+        <!-- <li><%= listTitle %></li> -->
+
+        <% newListItems.forEach((item) => { %>
+        <form action="/delete" method="POST">
+            <div class="item">
+                <!-- onchange tiggers the post request -->
+                <input type="checkbox" name="checkbox" value="<%=item._id%>" onChange="this.form.submit()">
+                <p><%= item.name %></p>
+            </div>
+            <input type="hidden" name="listName" value="<%= listTitle %>"></input>
+        </form>
+        <% }) %>
+
+        <form action="/" class="item" method="POST">
+            <h1 class="h3 mb-3 font-weight-normal">Please enter your to do:</h1>
+            <input type="text" name="newItem" placeholder="What?" required autofocus>
+            <!-- below change the value to listTitle, to make the submit dynamic -->
+            <button type="submit" name="list" value="<%= listTitle %>">+</button>
+        </form>
+    </div>
+
+<!-- ejs format, link to the footer file -->
+<%- include("footer") -%>
